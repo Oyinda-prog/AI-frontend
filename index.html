@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with AI</title>
 </head>
+<style>
+    #response {
+        background-color: #f9f9f9;
+        border-left: 4px solid #007bff; /* Blue left border */
+        padding: 15px;
+        margin-top: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+    }
+    #response h3 {
+        color: #007bff;
+        margin-top: 15px;
+    }
+    #response p {
+        margin-bottom: 10px;
+    }
+</style>
 <body>
     <textarea type="text" id="prompt" placeholder="Enter your message" rows="30" cols="20"></textarea>
     <button onclick="sendPrompt()">Send</button>
@@ -23,7 +42,11 @@
             });
 
             const data = await response.json();
-            document.getElementById("response").innerText = data.ai;
+            const formattedResponse = data.ai
+            .replace(/### (.+)/g, "<h3>$1</h3>") 
+            .replace(/\n\n/g, "<p>")
+        
+            document.getElementById("response").innerText =formattedResponse;
             document.getElementById("prompt").value=''
         }
     </script>
